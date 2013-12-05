@@ -16,6 +16,14 @@
     <developerConnection>scm:git:git@github.com:m0smith/maven-jetty-pluto-embedded.git</developerConnection>
     <url>scm:git:git@github.com:m0smith/maven-jetty-pluto-embedded.git</url>
   </scm>
+  <licenses>
+    <license>
+      <name>Apache License Version 2.0, January 1994</name>
+      <url>http://www.apache.org/licenses/</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
   <developers>
     <developer>
       <id>nilsga</id>
@@ -43,6 +51,34 @@
       <timezone>-7</timezone>
     </developer>
   </developers>
+  <profiles>
+    <profile>
+      <id>release-sign-artifacts</id>
+      <activation>
+        <property>
+	  <name>performRelease</name>
+	  <value>true</value>
+        </property>
+      </activation>
+      <build>
+        <plugins>
+	  <plugin>
+	    <groupId>org.apache.maven.plugins</groupId>
+	    <artifactId>maven-gpg-plugin</artifactId>
+	    <executions>
+	      <execution>
+                <id>sign-artifacts</id>
+                <phase>verify</phase>
+                <goals>
+		  <goal>sign</goal>
+                </goals>
+	      </execution>
+	    </executions>
+	  </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
   <build>
     <extensions>
       <extension>
@@ -51,6 +87,51 @@
 	<version>1.0-alpha-5</version>
       </extension>
     </extensions>
+    <plugins>
+      <plugin>
+	<groupId>org.apache.maven.plugins</groupId>
+	<artifactId>maven-release-plugin</artifactId>
+	<version>2.4.2</version>
+	<configuration>
+	  <mavenExecutorId>forked-path</mavenExecutorId>
+	</configuration>
+      </plugin>
+      <plugin>
+	<groupId>org.apache.maven.plugins</groupId>
+	<artifactId>maven-source-plugin</artifactId>
+	<executions>
+	  <execution>
+	    <id>attach-sources</id>
+	    <phase>package</phase>
+	    <goals>
+	      <goal>jar</goal>
+	      <goal>test-jar</goal>
+	    </goals>
+	  </execution>
+	</executions>
+      </plugin>
+      <plugin>
+	<groupId>org.apache.maven.plugins</groupId>
+	<artifactId>maven-javadoc-plugin</artifactId>
+	<version>2.7</version>
+	<executions>
+	  <execution>
+	    <goals>
+	      <goal>jar</goal>
+	    </goals>
+	    <phase>package</phase>
+	  </execution>
+	</executions>
+      </plugin>
+      <plugin>
+	<artifactId>maven-surefire-plugin</artifactId>
+      </plugin>
+      <plugin>
+	<groupId>org.codehaus.mojo</groupId>
+	<artifactId>cobertura-maven-plugin</artifactId>
+	<version>2.6</version>
+      </plugin>
+    </plugins>
   </build>
   <dependencies>
     <dependency>
