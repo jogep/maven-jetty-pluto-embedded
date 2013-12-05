@@ -79,6 +79,19 @@
       </build>
     </profile>
   </profiles>
+  <mailingLists>
+    <mailingList>
+      <name>User Support</name>
+      <post>portletunit-user@lists.sourceforge.net</post>
+      <subscribe>
+	https://lists.sourceforge.net/lists/listinfo/portletunit-user
+      </subscribe>
+      <unsubscribe>
+	https://lists.sourceforge.net/lists/listinfo/portletunit-user
+      </unsubscribe>
+      <archive />
+    </mailingList>
+  </mailingLists>
   <build>
     <extensions>
       <extension>
