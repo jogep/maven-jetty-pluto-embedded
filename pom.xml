@@ -263,18 +263,4 @@
       <version>1.6.1</version>
     </dependency>
   </dependencies>
-  <distributionManagement> 
-    <site> 
-      <id>boss.ssh.site</id> 
-      <url>file:/srv/www/htdocs/maven-jetty-pluto-embedded</url> 
-    </site> 
-    <repository> 
-      <id>boss.ssh.repo</id> 
-      <url>file:/usr/local/jboss-4.0.4.GA/proximity/inhouse/storage</url> 
-    </repository> 
-    <snapshotRepository> 
-      <id>boss.ssh.snapshots</id> 
-      <url>file:/usr/local/jboss-4.0.4.GA/proximity/inhouse.snapshot/storage</url> 
-    </snapshotRepository> 
-  </distributionManagement> 
 </project>
