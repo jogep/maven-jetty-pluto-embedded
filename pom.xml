@@ -13,7 +13,7 @@
   <description>
     Artifact allowing pluto to be embedded in Jetty in a maven project. 
     This makes it possible to use the maven-jetty-plugin and create a launcher
-    in Eclipse for running your portlets.
+    in Eclipse for running your portlets.   This one has been packaged for use with portletunit2.
   </description>
   <url>https://github.com/m0smith/maven-jetty-pluto-embedded</url>
   <scm>
