@@ -60,7 +60,7 @@ public class FakeUserPrincipalFilter implements Filter {
 				public String getName() {
 					return principalName;
 				}
-				
+
 				public String toString() {
 					return "PrincipalName: " + principalName + ", Roles: " + principalRoles;
 				}

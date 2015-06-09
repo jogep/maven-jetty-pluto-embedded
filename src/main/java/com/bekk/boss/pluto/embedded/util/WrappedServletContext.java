@@ -45,7 +45,13 @@ public class WrappedServletContext implements ServletContext {
 	}
 
 	public ServletContext getContext(String uripath) {
-		return realContext.getContext(uripath);
+		ServletContext ctx = realContext.getContext(uripath);
+		if(ctx instanceof WrappedServletContext) {
+			return ctx;
+		}
+		else {
+			return new WrappedServletContext(ctx);
+		}
 	}
 
 	public String getContextPath() {

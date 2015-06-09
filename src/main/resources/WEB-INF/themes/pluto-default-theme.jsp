@@ -16,20 +16,32 @@ implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 --%>
-<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://portals.apache.org/pluto" prefix="pluto" %>
+<% pageContext.setAttribute("now", new java.util.Date()); %>
+
+<!--
+Portal page template for default theme used by the Pluto Portal Driver.
+This template divides all portlets into two groups (div blocks): the first
+group (the left column) displays portlets with odd IDs, while the second group
+(the right column) displays portlets with even IDs.
+-->
 
 <html>
+
 <head>
     <title>Pluto Portal</title>
     <style type="text/css" title="currentStyle" media="screen">
         @import "<c:out value="${pageContext.request.contextPath}"/>/pluto.css";
         @import "<c:out value="${pageContext.request.contextPath}"/>/portlet-spec-1.0.css";
+        @import "<c:out value="${pageContext.request.contextPath}"/>/portlet-spec-2.0.css"; 
         <c:forEach items="${org_apache_pluto_embedded_extraStyles}" var="style">
-	    @import "<c:out value="${pageContext.request.contextPath}"/><c:out value="${style}"/>";
-	    </c:forEach>
+            @import "<c:out value="${pageContext.request.contextPath}"/><c:out value="${style}"/>";
+        </c:forEach>
     </style>
-    <script type="text/javascript" src="<c:out value="${pageContext.request.contextPath}"/>/pluto.js">
+    <script type="text/javascript"
+            src="<c:out value="${pageContext.request.contextPath}"/>/pluto.js">
     </script>
 </head>
 
@@ -45,12 +57,13 @@ limitations under the License.
     </div>
 
     <!-- Logout link -->
-    <c:if test="${pageContext.request.remoteUser != null}">
-        <div id="logout">
-            <a href="<c:url value='/Logout'/>">Logout</a>
-        </div>
-    </c:if>
-    
+    <div id="logout">
+        <a href="<c:url value='/Logout'/>">Logout</a>
+    </div>
+
+    <!-- Navigation block: links to portal pages -->
+    <jsp:include page="navigation.jsp"/>
+
     <!-- Content block: portlets are divided into two columns/groups -->
     <div id="content">
         <pluto:isMaximized var="isMax"/>
@@ -59,27 +72,27 @@ limitations under the License.
         <c:choose>
             <c:when test="${isMax}">
                     <c:forEach var="portlet" varStatus="status"
-                               items="${org_apache_pluto_embedded_portletIds}">
+                               items="${currentPage.portletIds}">
                         <c:set var="portlet" value="${portlet}" scope="request"/>
-                        <jsp:include page="/WEB-INF/themes/portlet-skin.jsp"/>
+                        <jsp:include page="portlet-skin.jsp"/>
                     </c:forEach>
              </c:when>
 
             <c:otherwise>
                 <div id="portlets-left-column">
                     <c:forEach var="portlet" varStatus="status"
-                               items="${org_apache_pluto_embedded_portletIds}" step="2">
+                               items="${currentPage.portletIds}" step="2">
                         <c:set var="portlet" value="${portlet}" scope="request"/>
-                        <jsp:include page="/WEB-INF/themes/portlet-skin.jsp"/>
+                        <jsp:include page="portlet-skin.jsp"/>
                     </c:forEach>
                 </div>
 
                 <!-- Right column -->
                 <div id="portlets-right-column">
                     <c:forEach var="portlet" varStatus="status"
-                               items="${org_apache_pluto_embedded_portletIds}" begin="1" step="2">
+                               items="${currentPage.portletIds}" begin="1" step="2">
                         <c:set var="portlet" value="${portlet}" scope="request"/>
-                        <jsp:include page="/WEB-INF/themes/portlet-skin.jsp"/>
+                        <jsp:include page="portlet-skin.jsp"/>
                     </c:forEach>
                 </div>
 
@@ -88,11 +101,9 @@ limitations under the License.
 
     </div>
 
-
-
     <!-- Footer block: copyright -->
     <div id="footer">
-        &copy; 2003-2005 Apache Software Foundation
+       &copy; 2003-<fmt:formatDate value="${now}" pattern="yyyy"/> Apache Software Foundation
     </div>
 
 </div>
